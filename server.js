@@ -29,6 +29,17 @@ mongoose.connect("mongodb://localhost/newsScrape",
 
 var mainRoutes = require("./routes/main-routes.js")(app);
 
+// Route to display all articles from db
+app.get("/", function(req, res){
+	db.Article.find({})
+		.then(function(dbArticle){
+			res.render("index", {articles: dbArticle});
+		})
+		.catch(function(error){
+			res.json(error);
+		});
+});
+
 // Route to scrape articles 
 app.get("/scrape", function(req, res){
 	request("https://www.npr.org/sections/world/", function(error, response, html){
@@ -59,16 +70,11 @@ app.get("/scrape", function(req, res){
 	});
 });
 
-// Route to display all articles from db
-app.get("/", function(req, res){
-	db.Article.find({})
-		.then(function(dbArticle){
-			res.render("index", {articles: dbArticle});
-		})
-		.catch(function(error){
-			res.json(error);
-		});
+// Route to save articles
+app.get("/saved", function(req, res){
+	// db.Article.find({})
 });
+
 
 app.listen(8080, function() {
   console.log("App running on port 8080!");

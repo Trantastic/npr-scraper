@@ -10,26 +10,9 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item ml-2">
-        <a class="nav-link" href="#">Saved Articles</a>
-      </li>
-      <li class="nav-item ml-2">
-        <button class="btn btn-info" id="scrape">Scrape Articles</button>
+        <a class="nav-link" href="/saved">Saved Articles</a>
       </li>
     </ul>
   </div>
 </nav>
-{{!-- Where each article scarpped is displayed --}}
-{{#each articles}}
 
-<div class="card">
-  <div class="card-header">
-    <a href="{{link}}" target="_blank">{{title}}</a>
-  </div>
-  <div class="card-body">
-{{!--     <h5 class="card-title">{{link}}</h5> --}}
-    <p class="card-text">{{summary}}.</p>
-    <a href="#" class="btn btn-dark">Save Article</a>
-  </div>
-</div>
-
-{{/each}}
