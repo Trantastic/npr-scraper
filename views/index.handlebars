@@ -17,3 +17,12 @@
     </ul>
   </div>
 </nav>
+
+{{#each articles}}
+
+<h2>{{this.title}}</h1>
+<h3>{{this.link}}</h2>
+
+<p>{{this.summary}}</p>
+
+{{/each}}

@@ -1,10 +1,10 @@
 // Requiring npms
 var express = require("express");
+var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var cheerio = require("cheerio");
 var request = require("request");
-var exphbs = require("express-handlebars");
 
 // Requiring everything in models folder
 var db = require("./models");
@@ -16,6 +16,11 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+app.use(express.static("public"));
+// app.get('/', function (req, res) {
+//     res.render('index');
+// });
 
 mongoose.Promise = Promise;
 mongoose.connect("mongodb://localhost/newsScrape", 
@@ -58,7 +63,8 @@ app.get("/scrape", function(req, res){
 app.get("/articles", function(req, res){
 	db.Article.find({})
 		.then(function(dbArticle){
-			res.json(dbArticle);
+			console.log(dbArticle)
+			res.render("index", {articles: dbArticle});
 		})
 		.catch(function(error){
 			res.json(error);
