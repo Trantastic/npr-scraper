@@ -60,10 +60,9 @@ app.get("/scrape", function(req, res){
 });
 
 // Route to display all articles from db
-app.get("/articles", function(req, res){
+app.get("/", function(req, res){
 	db.Article.find({})
 		.then(function(dbArticle){
-			console.log(dbArticle)
 			res.render("index", {articles: dbArticle});
 		})
 		.catch(function(error){

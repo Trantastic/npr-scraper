@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">News Scrapper</a>
+  <a class="navbar-brand" href="#">NPR World News</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -12,17 +12,18 @@
         <a class="nav-link" href="#">Saved Articles</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Scrape Articles</a>
+        <button class="btn btn-info ml-5">Scrape Articles</button>
       </li>
     </ul>
   </div>
 </nav>
 
+
 {{#each articles}}
 
-<h2>{{this.title}}</h1>
-<h3>{{this.link}}</h2>
+<h2>{{title}}</h1>
+<h3>{{link}}</h2>
 
-<p>{{this.summary}}</p>
+<p>{{summary}}</p>
 
 {{/each}}
