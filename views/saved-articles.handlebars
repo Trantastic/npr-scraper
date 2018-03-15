@@ -22,10 +22,45 @@
 <div class="card">
   <div class="card-header bg-info">
     <a class="text-white" href="{{link}}" target="_blank">{{title}}</a>
+    <button class="btn btn-sm btn-danger ml-3" id="delete" data-id="{{_id}}">Delete</button>
   </div>
   <div class="card-body">
     <p class="card-text">{{summary}}.</p>
-    <button class="btn btn-dark" id="save" data-id="{{_id}}">Save Article</button>
+    <button class="btn btn-info" id="add-comment" data-id="{{_id}}" data-toggle="modal" data-target="#exampleModal">Comment</button>
+  </div>
+</div>
+
+{{!-- Modal for user's comments --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Article: {{title}}</h5>
+{{!--         <h6>{{title}}</h6> --}}
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <ul class="list-group">
+            <li class="list-group-item">
+              {{#each comment}}
+                {{body}}
+              {{/each}}
+              <button class="btn btn-danger w-25 p-0" id="delete-comment">x</button>
+            </li>
+          </ul>
+          <div class="form-group">
+            <label for="comment-box" class="col-form-label">Comment:</label>
+            <textarea class="form-control" id="comment-box"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success">Save</button>
+      </div>
+    </div>
   </div>
 </div>
 

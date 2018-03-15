@@ -8,7 +8,7 @@ $(document).ready(function(){
 	});
 
 	// Updates saved value to true in mongoDB when button is clicked
-	$("#save").on("click", function(){
+	$(document).on("click", "#save", function(){
 		console.log("save was clicked");
 
 		const thisId = $(this).attr("data-id");
@@ -25,5 +25,18 @@ $(document).ready(function(){
 		// 	console.log(data);
 		// });
 	});
+
+	$(document).on("click", "#add-comment", function(){
+		console.log("ADDING COMMENT");
+
+		const thisId = $(this).attr("data-id");
+
+		$.ajax({
+			method: "POST",
+			url: "/save/" + thisId
+		}).then(function(data){
+			$("#comment-box").empty();
+		});
+	})
 
 });
