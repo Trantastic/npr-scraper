@@ -68,14 +68,21 @@ app.get("/scrape", function(req, res){
 
 // Route to save articles
 app.put("/save/:id", function(req, res){
-	db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true}, function(){
-		console.log("!!!!!!!!!!!! SUCCESS !!!!!!!!!!!");
-	});
+	db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true});
+
+	console.log("!!!!!!!  SAVED !!!!!!!!!");
 });
 
-// app.get("/saved", function(req, res){
-// 	db.Article.find({ saved: true }, function)
-// });
+// Points to saved-articles handlebar page, displays only saved articles
+app.get("/saved", function(req, res){
+	db.Article.find({ saved: true })
+		.then(function(savedArticles){
+			res.render("saved-articles", {savedArticles: savedArticles});
+		})
+		.catch(function(error){
+			res.json(error);
+		});
+});
 
 app.listen(8080, function() {
   console.log("App running on port 8080!");

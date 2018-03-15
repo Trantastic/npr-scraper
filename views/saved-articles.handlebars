@@ -1,6 +1,6 @@
 {{!-- Navbar --}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">NPR World News</a>
+  <a class="navbar-brand" href="/"><img src="/img/brand.png"> NPR World News</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -16,3 +16,17 @@
   </div>
 </nav>
 
+{{!-- Where each saved article is displayed --}}
+{{#each savedArticles}}
+
+<div class="card">
+  <div class="card-header">
+    <a href="{{link}}" target="_blank">{{title}}</a>
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{summary}}.</p>
+    <button class="btn btn-dark" id="save" data-id="{{_id}}">Save Article</button>
+  </div>
+</div>
+
+{{/each}}
