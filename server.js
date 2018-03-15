@@ -85,31 +85,43 @@ app.get("/saved", function(req, res){
 		});
 });
 
-// // Grabbing a specific article with its comments
-// app.get("/save/:id", function(req, res){
-// 	db.Article.findOne({ _id: req.params.id })
-// 	.populate("comment")
-// 	.then(function(dbArticle){
-// 		res.render("saved-articles", { comment: dbArticle });
-// 	})
-// 	.catch(function(error){
-// 		res.json(error);
-// 	});
-// });
+// Grabbing a specific article with its comments
+app.get("/save/:id", function(req, res){
+	db.Article.findOne({ _id: req.params.id })
+	.populate("comment")
+	.then(function(dbArticle){
+		res.render("partials/comments/comments-block", { comment: dbArticle.comment });
+	})
+	.catch(function(error){
+		res.json(error);
+	});
+});
 
-// // Saves user's comments and updates article's associated note
-// app.post("/save/:id", function(req, res){
-// 	db.Comment.create(req.body)
-// 		.then(function(dbComment){
-// 			return db.Article.findOneAndUpdate({ _id: req.params.id}, { comment: dbComment._id }, { new: true });
-// 		})
-// 		.then(function(dbArticle){
-// 			res.json(dbArticle);
-// 		})
-// 		.catch(function(error){
-// 			res.json(error);
-// 		});
-// });
+// Saves user's comments and updates article's associated note
+app.post("/save/:id", function(req, res){
+
+	console.log("this is req.body ", req.body);
+
+	db.Comment.create(req.body)
+		.then(function(dbComment){
+			console.log(dbComment);
+			return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
+		})
+		.then(function(dbArticle){
+			res.json(dbArticle);
+		})
+		.catch(function(error){
+			res.json(error);
+		});
+});
+
+// Delete a saved article
+app.delete("/delete/:id", function(req, res){
+	db.Article.deleteOne({ _id: req.params.id })
+		.then(function(){
+			console.log("Saved article deleted");
+		});
+});
 
 app.listen(8080, function() {
   console.log("App running on port 8080!");

@@ -11,7 +11,7 @@ $(document).ready(function(){
 	$(document).on("click", "#save", function(){
 		console.log("save was clicked");
 
-		const thisId = $(this).attr("data-id");
+		let thisId = $(this).attr("data-id");
 
 		$.ajax({
 			method: "PUT",
@@ -28,16 +28,40 @@ $(document).ready(function(){
 
 	// Adds comment to corresponding article and stores in DB
 	$(document).on("click", "#save-comment", function(){
-		console.log("ADDING COMMENT");
-
-		const thisId = $(this).attr("data-id");
+		let thisId = $(this).attr("data-id");
 
 		$.ajax({
 			method: "POST",
+			url: "/save/" + thisId,
+			data: {
+				body: $("#comment-box").val()
+			}
+		}).then(function(data){
+			$("#comment-box").val("");
+		});
+	});
+
+	$(document).on("click", "#comment-btn", function(){
+		let thisId = $(this).attr("data-id");
+
+		$.ajax({
+			method: "GET",
 			url: "/save/" + thisId
 		}).then(function(data){
-			$("#comment-box").empty();
+			console.log("Comments Displayed ", data);
 		});
-	})
+	});
+
+	// Delete a saved article
+	$(document).on("click", "#delete", function(){
+		let thisId = $(this).attr("data-id");
+
+		$.ajax({
+			method: "DELETE",
+			url: "/delete/" + thisId
+		}).then(function(data){
+			location.reload();
+		});
+	});
 
 });
