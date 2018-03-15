@@ -1,31 +1,27 @@
 // Requiring npms
-var express = require("express");
-var exphbs = require("express-handlebars");
-var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
-var cheerio = require("cheerio");
-var request = require("request");
+const express = require("express");
+const exphbs = require("express-handlebars");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const cheerio = require("cheerio");
+const request = require("request");
 
 // Requiring everything in models folder
 var db = require("./models");
 
 var PORT = process.env.PORT || 8080;
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 app.use(express.static("public"));
-// app.get('/', function (req, res) {
-//     res.render('index');
-// });
 
 mongoose.Promise = Promise;
 mongoose.connect("mongodb://localhost/newsScrape", 
 	{useMongoClient: true});
-
 
 var mainRoutes = require("./routes/main-routes.js")(app);
 
@@ -71,11 +67,33 @@ app.get("/scrape", function(req, res){
 });
 
 // Route to save articles
-app.get("/saved", function(req, res){
-	// db.Article.find({})
+app.put("/save/:id", function(req, res){
+	db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true}, function(){
+		console.log("!!!!!!!!!!!! SUCCESS !!!!!!!!!!!");
+	});
 });
 
+// app.get("/saved", function(req, res){
+// 	db.Article.find({ saved: true }, function)
+// });
 
 app.listen(8080, function() {
   console.log("App running on port 8080!");
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
