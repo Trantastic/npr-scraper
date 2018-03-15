@@ -26,7 +26,8 @@ $(document).ready(function(){
 		// });
 	});
 
-	$(document).on("click", "#add-comment", function(){
+	// Adds comment to corresponding article and stores in DB
+	$(document).on("click", "#save-comment", function(){
 		console.log("ADDING COMMENT");
 
 		const thisId = $(this).attr("data-id");

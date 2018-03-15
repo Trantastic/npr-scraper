@@ -68,9 +68,10 @@ app.get("/scrape", function(req, res){
 
 // Route to save articles
 app.put("/save/:id", function(req, res){
-	db.Article.update({ _id: req.params.id }, { saved: true});
-
-	console.log("!!!!!!!  SAVED !!!!!!!!!");
+	db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true })
+		.then(function(){
+			console.log("Article saved!");
+		});
 });
 
 // Points to saved-articles handlebar page, displays only saved articles
@@ -84,22 +85,31 @@ app.get("/saved", function(req, res){
 		});
 });
 
-// Saves user's comments and updates article's associated note
-app.post("/save/:id", function(req, res){
-	db.Comment.create(req.body)
-		.then(function(dbComment){
-			res.render("saved-articles", { comment: dbComment });
-		})
-		// .then(function(dbComment){
-		// 	return db.Article.findOneAndUpdate({ _id: req.params.id}, { comment: dbComment._id }, { new: true });
-		// })
-		// .then(function(dbArticle){
-		// 	res.json(dbArticle);
-		// })
-		.catch(function(error){
-			res.json(error);
-		});
-});
+// // Grabbing a specific article with its comments
+// app.get("/save/:id", function(req, res){
+// 	db.Article.findOne({ _id: req.params.id })
+// 	.populate("comment")
+// 	.then(function(dbArticle){
+// 		res.render("saved-articles", { comment: dbArticle });
+// 	})
+// 	.catch(function(error){
+// 		res.json(error);
+// 	});
+// });
+
+// // Saves user's comments and updates article's associated note
+// app.post("/save/:id", function(req, res){
+// 	db.Comment.create(req.body)
+// 		.then(function(dbComment){
+// 			return db.Article.findOneAndUpdate({ _id: req.params.id}, { comment: dbComment._id }, { new: true });
+// 		})
+// 		.then(function(dbArticle){
+// 			res.json(dbArticle);
+// 		})
+// 		.catch(function(error){
+// 			res.json(error);
+// 		});
+// });
 
 app.listen(8080, function() {
   console.log("App running on port 8080!");
