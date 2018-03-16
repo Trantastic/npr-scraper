@@ -25,8 +25,6 @@ mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB_URI, 
 	{useMongoClient: true});
 
-var mainRoutes = require("./routes/main-routes.js")(app);
-
 // Route to display all articles from db
 app.get("/", function(req, res){
 	db.Article.find({})
@@ -93,8 +91,7 @@ app.get("/save/:id", function(req, res){
 	db.Article.findOne({ _id: req.params.id })
 	.populate("comment")
 	.then(function(dbArticle){
-		res.json(dbArticle);
-		// res.render("saved-articles", { comment: dbArticle });
+		res.render("saved-articles", { comment: dbArticle });
 	})
 	.catch(function(error){
 		res.json(error);
@@ -108,10 +105,6 @@ app.post("/save/:id", function(req, res){
 		.then(function(dbComment){
 			return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
 		})
-		// .then(function(dbArticle){
-		// 	res.render("saved-articles", { commentLog: dbArticle });
-		// 	console.log("COMMENT LOG: "	, dbArticle);
-		// })
 		.catch(function(error){
 			res.json(error);
 		});
@@ -128,20 +121,4 @@ app.delete("/delete/:id", function(req, res){
 app.listen(8080, function() {
   console.log("App running on port 8080!");
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
