@@ -15,11 +15,18 @@
     </ul>
   </div>
 </nav>
+{{!-- Jumbotron --}}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <div class="background"></div>
+    <h1 class="display-4 text-center"><strong>Saved Articles</strong></h1>
+  </div>
+</div>
 
 {{!-- Where each saved article is displayed --}}
 {{#each savedArticles}}
 
-<div class="card">
+<div class="card mx-auto">
   <div class="card-header bg-info">
     <a class="text-white" href="{{link}}" target="_blank">{{title}}</a>
     <button class="btn btn-sm btn-danger ml-3" id="delete" data-id="{{_id}}">Delete</button>
@@ -42,12 +49,14 @@
       </div>
       <div class="modal-body">
         <form>
-          <ul class="list-group">
-{{!--             <li class="list-group-item"> --}}
-              {{> comments/comments-block}}
-{{!--               <button class="btn btn-danger w-25 p-0" id="delete-comment">x</button>
-            </li> --}}
-          </ul>
+{{!--           <ul class="list-group">
+              {{#if comment}}
+                <li class="list-group-item">
+                  {{comment}}
+                  <button class="btn btn-sm btn-danger w-25" id="delete-comment">x</button>
+                </li>
+              {{/if}}
+          </ul> --}}
           <div class="form-group">
             <label for="comment-box" class="col-form-label">Comment:</label>
             <textarea class="form-control" id="comment-box"></textarea>
@@ -55,7 +64,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="save-comment" data-dismiss="modal">Save</button>
+        <button type="button" class="btn btn-success" id="save-comment">Save</button>
       </div>
     </div>
   </div>

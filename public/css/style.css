@@ -1,0 +1,9 @@
+.jumbotron {
+	background-image: url("../img/bg-img.jpg");
+	background-size: cover;
+	color: white;
+}
+
+.card {
+	width: 90%;
+}

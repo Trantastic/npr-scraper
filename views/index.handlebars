@@ -18,10 +18,18 @@
     </ul>
   </div>
 </nav>
+{{!-- Jumbotron --}}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <div class="background"></div>
+    <h1 class="display-4 text-center"><strong>NPR World News Scraper</strong></h1>
+    <p class="lead text-center"><strong>Utilizing Mongo</strong></p>
+  </div>
+</div>
 {{!-- Where each article scarpped is displayed --}}
 {{#each articles}}
 
-<div class="card">
+<div class="card mx-auto mb-5">
   <div class="card-header bg-info">
     <a class="text-white" href="{{link}}" target="_blank">{{title}}</a>
   </div>
