@@ -19,8 +19,10 @@ app.set("view engine", "handlebars");
 
 app.use(express.static("public"));
 
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/newsScrape", 
+mongoose.connect(process.env.MONGODB_URI, 
 	{useMongoClient: true});
 
 var mainRoutes = require("./routes/main-routes.js")(app);
