@@ -91,7 +91,7 @@ app.get("/save/:id", function(req, res){
 	db.Article.findOne({ _id: req.params.id })
 	.populate("comment")
 	.then(function(dbArticle){
-		res.render("saved-articles", { comment: dbArticle });
+		// res.render("saved-articles", { comment: dbArticle });
 	})
 	.catch(function(error){
 		res.json(error);
@@ -100,10 +100,9 @@ app.get("/save/:id", function(req, res){
 
 // Saves user's comments and updates article's associated note
 app.post("/save/:id", function(req, res){
-
 	db.Comment.create(req.body)
 		.then(function(dbComment){
-			return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
+			return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { comment: dbComment}}, { new: true });
 		})
 		.catch(function(error){
 			res.json(error);
