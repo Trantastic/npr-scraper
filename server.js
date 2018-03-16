@@ -56,7 +56,6 @@ app.get("/scrape", function(req, res){
 
 				db.Article.create(result)
 					.then(function(dbArticle){
-						console.log(dbArticle);
 					})
 					.catch(function(error){
 						return res.json(error);
@@ -70,7 +69,9 @@ app.get("/scrape", function(req, res){
 app.put("/save/:id", function(req, res){
 	db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true })
 		.then(function(){
-			console.log("Article saved!");
+		})
+		.catch(function(error){
+			res.json(error);
 		});
 });
 
@@ -90,7 +91,8 @@ app.get("/save/:id", function(req, res){
 	db.Article.findOne({ _id: req.params.id })
 	.populate("comment")
 	.then(function(dbArticle){
-		res.render("partials/comments/comments-block", { comment: dbArticle.comment });
+		res.json(dbArticle);
+		// res.render("saved-articles", { comment: dbArticle });
 	})
 	.catch(function(error){
 		res.json(error);
@@ -100,16 +102,14 @@ app.get("/save/:id", function(req, res){
 // Saves user's comments and updates article's associated note
 app.post("/save/:id", function(req, res){
 
-	console.log("this is req.body ", req.body);
-
 	db.Comment.create(req.body)
 		.then(function(dbComment){
-			console.log(dbComment);
 			return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id }, { new: true });
 		})
-		.then(function(dbArticle){
-			res.json(dbArticle);
-		})
+		// .then(function(dbArticle){
+		// 	res.render("saved-articles", { commentLog: dbArticle });
+		// 	console.log("COMMENT LOG: "	, dbArticle);
+		// })
 		.catch(function(error){
 			res.json(error);
 		});

@@ -2,9 +2,12 @@ $(document).ready(function(){
 
 	// Scrapes for articles when button is pressed
 	$("#scrape").on("click", function(){
-		$.get("/scrape", function(){
-			location.reload();
-		})
+		$.ajax({
+			method: "GET",
+			url: "/scrape"
+		}).then(function(){
+			location.reload(true);
+		});
 	});
 
 	// Updates saved value to true in mongoDB when button is clicked
@@ -19,11 +22,6 @@ $(document).ready(function(){
 		}).then(function(data){
 			console.log("THIS IS THE DATA ", data);
 		});
-
-		// When I wrote the ajax call below, it didnt work. Why?
-		// $.put("/save/" + thisId, function(data){
-		// 	console.log(data);
-		// });
 	});
 
 	// Adds comment to corresponding article and stores in DB
@@ -37,10 +35,12 @@ $(document).ready(function(){
 				body: $("#comment-box").val()
 			}
 		}).then(function(data){
-			$("#comment-box").val("");
+			console.log("THIS IS THE PUT DATA ", data);
+			// $("#comment-box").val("");
 		});
 	});
 
+	// Gets comments from specific article clicked
 	$(document).on("click", "#comment-btn", function(){
 		let thisId = $(this).attr("data-id");
 
@@ -48,7 +48,9 @@ $(document).ready(function(){
 			method: "GET",
 			url: "/save/" + thisId
 		}).then(function(data){
-			console.log("Comments Displayed ", data);
+			if(data.comment){
+				$("#comment-box").val(data.comment.body);
+			}
 		});
 	});
 
@@ -59,7 +61,8 @@ $(document).ready(function(){
 		$.ajax({
 			method: "DELETE",
 			url: "/delete/" + thisId
-		}).then(function(data){
+		}).then(function(){
+			console.log("reload");
 			location.reload();
 		});
 	});
