@@ -22,7 +22,7 @@ app.use(express.static("public"));
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 mongoose.Promise = Promise;
-mongoose.connect(process.env.MONGODB_URI, 
+mongoose.connect("mongodb://heroku_8pn7kcg6:rqthd87dtm3ftsoc8apo217s37@ds215709.mlab.com:15709/heroku_8pn7kcg6", 
 	{useMongoClient: true});
 
 // Route to display all articles from db
