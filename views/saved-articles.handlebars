@@ -49,14 +49,8 @@
       </div>
       <div class="modal-body">
         <form>
-          <ul class="list-group">
-              {{#if comment}}
-                <li class="list-group-item">
-                  {{comment}}
-                  <button class="btn btn-sm btn-danger w-25" id="delete-comment">x</button>
-                </li>
-              {{/if}}
-          </ul>
+{{!--           <ul class="list-group" id="comments-here">
+          </ul> --}}
           <div class="form-group">
             <label for="comment-box" class="col-form-label">Comment:</label>
             <textarea class="form-control" id="comment-box"></textarea>
@@ -64,7 +58,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" id="save-comment">Save</button>
+        <button type="button" class="btn btn-success" data-id="{{_id}}" id="save-comment">Save</button>
       </div>
     </div>
   </div>

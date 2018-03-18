@@ -19,10 +19,11 @@ app.set("view engine", "handlebars");
 
 app.use(express.static("public"));
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nprScrape";
 
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://heroku_2qsfpmrf:mc4r658ko8lj1ctl25fhobn7dg@ds129776.mlab.com:29776/heroku_2qsfpmrf");
+mongoose.connect("mongodb://localhost/nprScrape");
+// mongoose.connect("mongodb://heroku_2qsfpmrf:mc4r658ko8lj1ctl25fhobn7dg@ds129776.mlab.com:29776/heroku_2qsfpmrf");
 
 // Route to display all articles from db
 app.get("/", function(req, res){
@@ -87,10 +88,13 @@ app.get("/saved", function(req, res){
 
 // Grabbing a specific article with its comments
 app.get("/save/:id", function(req, res){
+	console.log(req.params.id);
 	db.Article.findOne({ _id: req.params.id })
 	.populate("comment")
 	.then(function(dbArticle){
-		// res.render("saved-articles", { comment: dbArticle });
+		console.log("POPULATE RESULT: ", dbArticle);
+		// res.render("saved-articles", { note: dbArticle.comment[0].body});
+		res.json(dbArticle);
 	})
 	.catch(function(error){
 		res.json(error);
@@ -99,9 +103,10 @@ app.get("/save/:id", function(req, res){
 
 // Saves user's comments and updates article's associated note
 app.post("/save/:id", function(req, res){
+
 	db.Comment.create(req.body)
 		.then(function(dbComment){
-			return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { comment: dbComment}}, { new: true });
+			return db.Article.findOneAndUpdate({ _id: req.params.id }, { comment: dbComment._id });
 		})
 		.catch(function(error){
 			res.json(error);

@@ -36,22 +36,30 @@ $(document).ready(function(){
 			}
 		}).then(function(data){
 			console.log("THIS IS THE PUT DATA ", data);
-			// $("#comment-box").val("");
+			
 		});
 	});
 
 	// Gets comments from specific article clicked
 	$(document).on("click", "#comment-btn", function(){
+		$("#comment-box").val("");
+		
 		let thisId = $(this).attr("data-id");
 
 		$.ajax({
 			method: "GET",
 			url: "/save/" + thisId
 		}).then(function(data){
-			if(data.comment){
-				$("#comment-box").val(data.comment.body);
-			}
+			console.log(data.comment.body);
+			let userComment = data.comment.body;
+			$("textarea#comment-box").val(userComment);
+			
 		});
+	});
+
+	// Deletes user comments from specific article
+	$(document).on("click", "#delete-comment", function(event){
+		event.preventDefault();
 	});
 
 	// Delete a saved article
@@ -62,8 +70,7 @@ $(document).ready(function(){
 			method: "DELETE",
 			url: "/delete/" + thisId
 		}).then(function(){
-			console.log("reload");
-			location.reload();
+			
 		});
 	});
 
