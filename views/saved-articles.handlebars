@@ -33,12 +33,12 @@
   </div>
   <div class="card-body">
     <p class="card-text">{{summary}}.</p>
-    <button class="btn btn-info" data-id="{{_id}}" data-toggle="modal" data-target="#exampleModal" id="comment-btn">Comment</button>
+    <button class="btn btn-info" data-id="{{_id}}" data-toggle="modal" data-target="#comment-modal" id="comment-btn">Comment</button>
   </div>
 </div>
 
 {{!-- Modal for user's comments --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="article-title" aria-hidden="true">
+<div class="modal fade" id="comment-modal" tabindex="-1" role="dialog" aria-labelledby="article-title" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -49,11 +49,9 @@
       </div>
       <div class="modal-body">
         <form>
-{{!--           <ul class="list-group" id="comments-here">
-          </ul> --}}
           <div class="form-group">
             <label for="comment-box" class="col-form-label">Comment:</label>
-            <textarea class="form-control" id="comment-box"></textarea>
+            <textarea class="form-control" id="comment-box" placeholder="Enter your comments here..."></textarea>
           </div>
         </form>
       </div>

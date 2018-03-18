@@ -12,30 +12,26 @@ $(document).ready(function(){
 
 	// Updates saved value to true in mongoDB when button is clicked
 	$(document).on("click", "#save", function(){
-		console.log("save was clicked");
-
 		let thisId = $(this).attr("data-id");
 
 		$.ajax({
 			method: "PUT",
 			url: "/save/" + thisId
 		}).then(function(data){
-			console.log("THIS IS THE DATA ", data);
+
 		});
 	});
-
+	
 	// Adds comment to corresponding article and stores in DB
+	let saveBtn;
 	$(document).on("click", "#save-comment", function(){
-		let thisId = $(this).attr("data-id");
-
 		$.ajax({
 			method: "POST",
-			url: "/save/" + thisId,
+			url: "/save/" + saveBtn,
 			data: {
 				body: $("#comment-box").val()
 			}
 		}).then(function(data){
-			console.log("THIS IS THE PUT DATA ", data);
 			
 		});
 	});
@@ -55,23 +51,23 @@ $(document).ready(function(){
 			$("textarea#comment-box").val(data.comment.body);
 			
 		});
-	});
-
-	// Deletes user comments from specific article
-	$(document).on("click", "#delete-comment", function(event){
-		event.preventDefault();
+		return saveBtn = thisId;
 	});
 
 	// Delete a saved article
 	$(document).on("click", "#delete", function(){
 		let thisId = $(this).attr("data-id");
 
+		deleteArticle(thisId);
+		// Refresh page when article is deleted
+		location.reload();
+	});
+
+	function deleteArticle(thisId){
 		$.ajax({
 			method: "DELETE",
 			url: "/delete/" + thisId
-		}).then(function(){
-			
 		});
-	});
+	}
 
 });

@@ -22,8 +22,7 @@ app.use(express.static("public"));
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nprScrape";
 
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/nprScrape");
-// mongoose.connect("mongodb://heroku_2qsfpmrf:mc4r658ko8lj1ctl25fhobn7dg@ds129776.mlab.com:29776/heroku_2qsfpmrf");
+mongoose.connect(MONGODB_URI);
 
 // Route to display all articles from db
 app.get("/", function(req, res){
@@ -88,12 +87,9 @@ app.get("/saved", function(req, res){
 
 // Grabbing a specific article with its comments
 app.get("/save/:id", function(req, res){
-	console.log(req.params.id);
 	db.Article.findOne({ _id: req.params.id })
 	.populate("comment")
 	.then(function(dbArticle){
-		console.log("POPULATE RESULT: ", dbArticle);
-		// res.render("saved-articles", { note: dbArticle.comment[0].body});
 		res.json(dbArticle);
 	})
 	.catch(function(error){
@@ -116,12 +112,11 @@ app.post("/save/:id", function(req, res){
 // Delete a saved article
 app.delete("/delete/:id", function(req, res){
 	db.Article.deleteOne({ _id: req.params.id })
-		.then(function(){
-			console.log("Saved article deleted");
+		.then(function(data){
+
 		});
 });
 
 app.listen(PORT, function() {
   console.log("App running on port 8080!");
 });
-
