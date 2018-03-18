@@ -43,6 +43,7 @@ $(document).ready(function(){
 	// Gets comments from specific article clicked
 	$(document).on("click", "#comment-btn", function(){
 		$("#comment-box").val("");
+		$("#article-title").empty();
 		
 		let thisId = $(this).attr("data-id");
 
@@ -50,9 +51,8 @@ $(document).ready(function(){
 			method: "GET",
 			url: "/save/" + thisId
 		}).then(function(data){
-			console.log(data.comment.body);
-			let userComment = data.comment.body;
-			$("textarea#comment-box").val(userComment);
+			$("#article-title").text(data.title);
+			$("textarea#comment-box").val(data.comment.body);
 			
 		});
 	});
