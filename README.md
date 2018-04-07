@@ -1,10 +1,10 @@
-# npr-scrapper
+# npr-scraper
 
 This is an app that scrapes news articles from NPR World News. You can save articles you want to read later and add comments to them. Whenever the user is on the home page, the app will automatically scrape for new articles. Users may also manually scrape for new articles by clicked the "Scrape Articles" button on the navbar.
 
 ## Demo ##
 
-[Clicked here for deployed app on Heroku](https://npr-scrapper.herokuapp.com/)
+[Clicked here for deployed app on Heroku](https://npr-scraper2018.herokuapp.com/)
 
 Users can save articles they want to read later and delete them:  
 ![](https://github.com/Trantastic/npr-scrapper/blob/master/public/img/gif1.gif)
